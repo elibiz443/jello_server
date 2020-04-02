@@ -27,3 +27,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'dotenv-rails'
 gem 'thor'
+gem 'active_model_serializers'
