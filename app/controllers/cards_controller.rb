@@ -3,12 +3,15 @@ class CardsController < ApplicationController
 
   def index
     @cards = Card.all
-
-    render json: @cards
+    if stale?(@cards)
+      render json: @cards
+    end
   end
 
   def show
-    render json: @card
+    if stale?(@card)
+      render json: @card
+    end
   end
 
   def create
@@ -17,7 +20,7 @@ class CardsController < ApplicationController
     if @card.save
       render json: @card, status: :created, location: @card
     else
-      render json: @card.errors, status: :unprocessable_entity
+      respond_with_validation_error @card
     end
   end
 
@@ -25,7 +28,7 @@ class CardsController < ApplicationController
     if @card.update(card_params)
       render json: @card
     else
-      render json: @card.errors, status: :unprocessable_entity
+      respond_with_validation_error @card
     end
   end
 

@@ -3,12 +3,15 @@ class BoardsController < ApplicationController
 
   def index
     @boards = Board.all
-
-    render json: @boards
+    if stale?(@boards)
+      render json: @boards
+    end
   end
 
   def show
-    render json: @board
+    if stale?(@board)
+      render json: @board
+    end
   end
 
   def create
@@ -17,7 +20,7 @@ class BoardsController < ApplicationController
     if @board.save
       render json: @board, status: :created, location: @board
     else
-      render json: @board.errors, status: :unprocessable_entity
+      respond_with_validation_error @board
     end
   end
 
@@ -25,7 +28,7 @@ class BoardsController < ApplicationController
     if @board.update(board_params)
       render json: @board
     else
-      render json: @board.errors, status: :unprocessable_entity
+      respond_with_validation_error @board
     end
   end
 

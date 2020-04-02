@@ -3,12 +3,15 @@ class CommentsController < ApplicationController
 
   def index
     @comments = Comment.all
-
-    render json: @comments
+    if stale?(@comments)
+      render json: @comments
+    end
   end
 
   def show
-    render json: @comment
+    if stale?(@comment)
+      render json: @comment
+    end
   end
 
   def create
@@ -17,7 +20,7 @@ class CommentsController < ApplicationController
     if @comment.save
       render json: @comment, status: :created, location: @comment
     else
-      render json: @comment.errors, status: :unprocessable_entity
+      respond_with_validation_error @comment
     end
   end
 
@@ -25,7 +28,7 @@ class CommentsController < ApplicationController
     if @comment.update(comment_params)
       render json: @comment
     else
-      render json: @comment.errors, status: :unprocessable_entity
+      respond_with_validation_error @comment
     end
   end
 

@@ -3,12 +3,15 @@ class ListsController < ApplicationController
 
   def index
     @lists = List.all
-
-    render json: @lists
+    if stale?(@lists)
+      render json: @lists
+    end
   end
 
   def show
-    render json: @list
+    if stale?(@list)
+      render json: @list
+    end
   end
 
   def create
@@ -17,7 +20,7 @@ class ListsController < ApplicationController
     if @list.save
       render json: @list, status: :created, location: @list
     else
-      render json: @list.errors, status: :unprocessable_entity
+      respond_with_validation_error @list
     end
   end
 
@@ -25,7 +28,7 @@ class ListsController < ApplicationController
     if @list.update(list_params)
       render json: @list
     else
-      render json: @list.errors, status: :unprocessable_entity
+      respond_with_validation_error @list
     end
   end
 

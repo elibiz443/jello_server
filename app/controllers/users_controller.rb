@@ -3,12 +3,15 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
-
-    render json: @users
+    if stale?(@users)
+      render json: @users
+    end
   end
 
   def show
-    render json: @user
+    if stale?(@user)
+      render json: @user
+    end
   end
 
   def create
@@ -17,7 +20,7 @@ class UsersController < ApplicationController
     if @user.save
       render json: @user, status: :created, location: @user
     else
-      render json: @user.errors, status: :unprocessable_entity
+      respond_with_validation_error @user
     end
   end
 
@@ -25,7 +28,7 @@ class UsersController < ApplicationController
     if @user.update(user_params)
       render json: @user
     else
-      render json: @user.errors, status: :unprocessable_entity
+      respond_with_validation_error @user
     end
   end
 
@@ -39,6 +42,6 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:email, :password_digest, :admin)
+      params.require(:user).permit(:email, :password, :password_confirmation, :admin)
     end
 end
