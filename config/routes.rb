@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
-  resources :comments
-  resources :cards
-  resources :lists
+  resources :users do
+    resources :boards, only: [:index]
+  end
   resources :boards
-  resources :users
+  resources :lists
+  resources :cards
+  resources :comments
 end
