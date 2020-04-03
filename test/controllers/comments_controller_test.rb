@@ -2,6 +2,8 @@ require 'test_helper'
 
 class CommentsControllerTest < ActionDispatch::IntegrationTest
   setup do
+    skip "Not Yet Set"
+    
     @comment = comments(:one)
   end
 

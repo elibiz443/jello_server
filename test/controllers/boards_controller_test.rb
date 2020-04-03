@@ -2,6 +2,8 @@ require 'test_helper'
 
 class BoardsControllerTest < ActionDispatch::IntegrationTest
   setup do
+    skip "Not Yet Set"
+    
     @board = boards(:one)
   end
 

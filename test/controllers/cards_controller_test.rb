@@ -2,6 +2,8 @@ require 'test_helper'
 
 class CardsControllerTest < ActionDispatch::IntegrationTest
   setup do
+    skip "Not Yet Set"
+    
     @card = cards(:one)
   end
 

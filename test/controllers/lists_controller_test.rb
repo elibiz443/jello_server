@@ -2,6 +2,8 @@ require 'test_helper'
 
 class ListsControllerTest < ActionDispatch::IntegrationTest
   setup do
+    skip "Not Yet Set"
+    
     @list = lists(:one)
   end
 
