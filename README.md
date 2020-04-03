@@ -1,3 +1,3 @@
 Jello Server
 
-This is Rails 6 API example.
+This is Rails 6 API template.
